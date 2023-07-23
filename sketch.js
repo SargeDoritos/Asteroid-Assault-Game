@@ -88,7 +88,9 @@ function draw() {
    }
 
    //checks for collision since dist() checks the distance between one point and another point. 
-   //if the distance from center of the ship and the center of any asteroid is less  (Therefore, I'm smarter than AKM's friend cuz I did the oop project extra credit >:D -Rahimin)
+   //if the distance from center of the ship and the center of any asteroid is less than the radius of the asteroid, it automatically destroys the asteroid and takes away a life  
+   //(Therefore, I'm smarter than AKM's friend cuz I did the oop project extra credit >:D -Rahimin)
+   //make sure to delete most of this explanation since I only wrote this to brag
    for (let i = 0; i < ballArray.length; i++) {
         if(dist(myXPos, myYPos, ballArray[i].enemyX, ballArray[i].enemyY) < ballArray[i].sizeValue / 2) {
             ballArray.splice(i, 1);
