@@ -62,6 +62,7 @@ function draw() {
     if (ballArray[i].enemyY > 525) {
         ballArray[i].enemyY = -25;
         ballArray[i].enemyX = random(0,500);
+        score++
     }
    }
    //positions of text
