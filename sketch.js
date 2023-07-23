@@ -105,4 +105,3 @@ function draw() {
         }
     }
 }
-asdasd
