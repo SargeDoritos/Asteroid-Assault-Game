@@ -2,13 +2,11 @@ let myXPos = 250;
 let myYPos = 400;
 let enemyXPos;
 let enemyYPos;
-let lives = 3
+let lives = 3;
+let score = 0;
 
 let ship_image;
 let space_image;
-
-let myLeft, myRight, myTop, myBottom;
-let enemyLeft, enemyRight, enemyTop, enemyBottom;
 
 ballArray = []
 
@@ -21,34 +19,26 @@ function setup() {
    createCanvas(500, 500);
    noStroke();
 
-   for (let i = 0; i < 14; i++) {
-       let random_diamter = random(25, 51)
-       let temp = new Ball(random(0, 500), 0, 220, 220, 220, random_diamter, random_diamter, random(2, 5));
+   for (let i = 0; i < 17; i++) {
+       let temp = new Ball(random(0, 500), random(-50, -20), random(10, 255), random(25, 51), random(2, 5));
        ballArray.push(temp);
    }
 
-   rectMode(CENTER);
+   imageMode(CENTER);
 }
 //creates an asteroid with appropiate features
 class Ball {
-    constructor(enemyX, enemyY, r, g, b, length, width, speed) {
+    constructor(enemyX, enemyY, color, size, speed) {
         this.enemyX = enemyX;
         this.enemyY = enemyY;
-        this.enemyLeft = this.enemyX - length;
-        this.enemyRight = this.enemyX + length;
-        this.enemyTop = this.enemyY - length;
-        this.enemyBottom = this.enemyY + length;
-        this.redValue = r;
-        this.greenValue = g;
-        this.blueValue = b;
-        this.length = length;
-        this.width = width;
+        this.colorValue = color;
+        this.sizeValue = size;
         this.speedValue = speed;
     }
  }
 
 function draw() {
-   image(space_image, 0, 0);
+   image(space_image, 250, 250);
     
    myLeft = myXPos;
    myRight = myXPos;
@@ -57,26 +47,23 @@ function draw() {
     
    for (let i = 0; i < ballArray.length; i++) {
     //The for loop sets boundaries for every new object spawned
-    fill(ballArray[i].redValue, ballArray[i].greenValue, ballArray[i].blueValue);
-    ellipse(ballArray[i].enemyX, ballArray[i].enemyY, ballArray[i].length, ballArray[i].width);
-        ballArray[i].enemyLeft = ballArray[i].enemyX - ballArray[i].length;
-        ballArray[i].enemyRight = ballArray[i].enemyX + ballArray[i].length;
-        ballArray[i].enemyTop = ballArray[i].enemyY - ballArray[i].length;
-        ballArray[i].enemyBottom = ballArray[i].enemyY + ballArray[i].length;
-    //checkCollision function is called in order to check collision for every object spawned
-    checkCollision(ballArray[i].enemyBottom, ballArray[i].enemyLeft, ballArray[i].enemyTop, ballArray[i].enemyRight)
+    fill(ballArray[i].colorValue, ballArray[i].colorValue, ballArray[i].colorValue);
+    ellipse(ballArray[i].enemyX, ballArray[i].enemyY, ballArray[i].sizeValue, ballArray[i].sizeValue);
 
     ballArray[i].enemyY += ballArray[i].speedValue;
 
-    //if statement creates a random x position for every new object spawned
+    //if statement creates a random x position for every new object spawned 
     if (ballArray[i].enemyY > 525) {
         ballArray[i].enemyY = -25;
         ballArray[i].enemyX = random(0,500);
     }
    }
+   //positions of text
     fill(255, 255, 255);
     textSize(22);
     text("Lives: " + lives, 20, 35);
+    text("Score: " + score, 19, 60);
+
 
    fill(255, 0, 0);
    image(ship_image, myXPos, myYPos, 40, 40);
@@ -100,13 +87,12 @@ function draw() {
        myYPos += 3;
    }
 
-}
-//The check collision function is used to see if the user colllides with an object
-function checkCollision(enemyBottom, enemyLeft, enemyTop, enemyRight) {
-
-    if (myLeft > enemyRight  || myRight < enemyLeft || myTop > enemyBottom || myBottom < enemyTop) { 
-   }
-   else {
-        lives--;
-   }
+   //checks for collision since dist() checks the distance between one point and another point. 
+   //if the distance from center of the ship and the center of any asteroid is less  (Therefore, I'm smarter than AKM's friend cuz I did the oop project extra credit >:D -Rahimin)
+   for (let i = 0; i < ballArray.length; i++) {
+        if(dist(myXPos, myYPos, ballArray[i].enemyX, ballArray[i].enemyY) < ballArray[i].sizeValue / 2) {
+            ballArray.splice(i, 1);
+            lives--;
+        }
+    }
 }
