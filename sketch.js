@@ -26,7 +26,7 @@ function setup() {
    noStroke();
 
    for (let i = 0; i < 17; i++) {
-       let temp = new Ball(random(0, 500), random(-50, -20), random(10, 255), random(25, 51), random(2, 5));
+       let temp = new Ball(random(0, 500), random(-500, -20), random(10, 255), random(25, 51), random(2, 5));
        ballArray.push(temp);
    }
 
