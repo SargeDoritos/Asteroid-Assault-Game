@@ -25,7 +25,7 @@ function setup() {
    createCanvas(500, 500);
    noStroke();
 
-   for (let i = 0; i < 17; i++) {
+   for (let i = 0; i < 30; i++) {
        let temp = new Ball(random(0, 500), random(-500, -20), random(10, 255), random(25, 51), random(2, 5));
        ballArray.push(temp);
    }
@@ -46,11 +46,6 @@ class Ball {
 function draw() {
    image(space_image, 250, 250);
     
-   myLeft = myXPos;
-   myRight = myXPos;
-   myTop = myYPos;
-   myBottom = myYPos;
-    
    for (let i = 0; i < ballArray.length; i++) {
     //The for loop sets boundaries for every new object spawned
     fill(ballArray[i].colorValue, ballArray[i].colorValue, ballArray[i].colorValue);
@@ -65,6 +60,24 @@ function draw() {
         score++
     }
    }
+
+   // makes sure the player can't hide outside of the canvas
+   if (myXPos > 520) {
+    myXPos = -15;
+   }
+
+   if (myXPos < -20) {
+    myXPos = 515;
+   }
+
+   if (myYPos > 520) {
+    myYPos = -15;
+   }
+
+   if (myYPos < -20) {
+    myYPos = 515;
+   }
+
    //positions of text
     fill(255, 255, 255);
     textSize(22);
