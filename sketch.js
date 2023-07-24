@@ -14,7 +14,7 @@ function preload() {
      space_image = loadImage("images/space.png");
      ship_image = loadImage("images/ship1.png");
      asteroid_hit = loadSound("sounds/asteroid_hit.m4a");
-     game_over = loadSound("sounds/game_over.m4a");
+     game_over = loadSound("sounds/game_over_sound.m4a");
      ship_hit = loadSound("sounds/ship_hit.m4a");
      shoot_sound = loadSound("sounds/shoot_sound.m4a");
      victory_sound = loadSound("sounds/victory.m4a");
