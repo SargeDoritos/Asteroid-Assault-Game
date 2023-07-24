@@ -4,11 +4,13 @@ let enemyXPos;
 let enemyYPos;
 let lives = 3;
 let score = 0;
+let canShoot = true;
 
 let ship_image;
 let space_image;
 
-ballArray = []
+let ballArray = []
+let bulletArray = [];
 
 function preload() {
      space_image = loadImage("images/space.png");
@@ -26,7 +28,7 @@ function setup() {
    createCanvas(500, 500);
    noStroke();
 
-   for (let i = 0; i < 30; i++) {
+   for (let i = 0; i < 50; i++) {
        let temp = new Ball(random(0, 500), random(-500, -20), random(10, 255), random(25, 51), random(2, 5));
        ballArray.push(temp);
    }
@@ -43,6 +45,20 @@ class Ball {
         this.speedValue = speed;
     }
  }
+
+class Bullet {
+    constructor(bulletX, bulletY, r, g, b, speed, width, length) {
+        this.bullX = bulletX
+        this.bullY = bulletY
+        this.rValue = r;
+        this.gValue = g;
+        this.bValue = b;
+        this.bullsped = speed;
+        this.bullwid = width;
+        this.bullleng = length;
+    }
+    
+}
 
 function draw() {
    image(space_image, 250, 250);
@@ -108,12 +124,53 @@ function draw() {
        myYPos += 3;
    }
 
+   //Oh the bullets are my tears
+   if (keyIsDown(32) && canShoot == true) {
+       let boolet = new Bullet(myXPos, myYPos, 0, 255, 0, 5, 5, 20);
+       bulletArray.push(boolet);
+       shoot_sound.play();
+       canShoot = false; 
+   }
+
+   if(!keyIsDown(32)) {
+    canShoot = true;
+   }
+
+   for (let i = 0; i < bulletArray.length; i++) {
+      fill(bulletArray[i].rValue, bulletArray[i].gValue, bulletArray[i].bValue);
+      rect(bulletArray[i].bullX, bulletArray[i].bullY, bulletArray[i].bullwid, bulletArray[i].bullleng)
+      bulletArray[i].bullY -= bulletArray[i].bullsped; 
+    }
+
+    for (let i = bulletArray.length - 1; i >= 0; i--) {
+        if (bulletArray[i].y < 0) {
+          bulletArray.splice(i, 1);
+        }
+    }
+    //bullet collision
+    for (let i = 0; i < bulletArray.length; i++) {
+        for (let j = 0; j < ballArray.length; j++) {
+            if (dist(bulletArray[i].bullX, bulletArray[i].bullY, ballArray[j].enemyX, ballArray[j].enemyY) < ballArray[j].sizeValue / 2) {
+                bulletArray.splice(i, 1);
+                ballArray.splice(j, 1);
+                asteroid_hit.play();
+
+                score += 5;
+                temp = new Ball(random(0, 500), random(-500, -20), random(10, 255), random(25, 51), random(2, 5));
+                ballArray.push(temp);
+                break;
+            }
+        }
+    }
+
    //checks for collision (all credit goes to the oop_project extra credit)
    for (let i = 0; i < ballArray.length; i++) {
         if(dist(myXPos, myYPos, ballArray[i].enemyX, ballArray[i].enemyY) < ballArray[i].sizeValue / 2) {
             ballArray.splice(i, 1);
             lives--;
             ship_hit.play();
+            temp = new Ball(random(0, 500), random(-500, -20), random(10, 255), random(25, 51), random(2, 5));
+            ballArray.push(temp);
         }
     }
 }
