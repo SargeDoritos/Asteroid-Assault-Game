@@ -17,8 +17,8 @@ function preload() {
      game_over = loadSound("sounds/game_over_sound.wav");
      ship_hit = loadSound("sounds/ship_hit.m4a");
      shoot_sound = loadSound("sounds/shoot_sound.m4a");
-     victory_sound = loadSound("sounds/victory.m4a");
-     victory2_sound = loadSound("sounds/victory2.m4a");
+     win_sound = loadSound("sounds/win_sound.wav");
+     
 }
 
 function setup() {
