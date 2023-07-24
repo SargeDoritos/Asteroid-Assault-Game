@@ -18,6 +18,9 @@ function preload() {
      ship_hit = loadSound("sounds/ship_hit.m4a");
      shoot_sound = loadSound("sounds/shoot_sound.m4a");
      win_sound = loadSound("sounds/win_sound.wav");
+     gameplay_music = loadSound("sounds/gameplay_music.m4a");
+     start_end_music = loadSound("sounds/start_end_music");
+
      
 }
 
