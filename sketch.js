@@ -101,6 +101,18 @@ function draw() {
     text("Lives: " + lives, 20, 35);
     text("Score: " + score, 19, 60);
 
+    //bullet creation
+    if (keyIsDown(32) && canShoot == true) {
+        let boolet = new Bullet(myXPos - 2, myYPos - 28, 0, 255, 0, 5, 5, 20);
+        bulletArray.push(boolet);
+        shoot_sound.play();
+        canShoot = false; 
+    }
+ 
+    if(!keyIsDown(32)) {
+     canShoot = true;
+    }
+ 
 
    fill(255, 0, 0);
    image(ship_image, myXPos, myYPos, 40, 40);
@@ -125,17 +137,6 @@ function draw() {
    }
 
    //Oh the bullets are my tears
-   if (keyIsDown(32) && canShoot == true) {
-       let boolet = new Bullet(myXPos, myYPos, 0, 255, 0, 5, 5, 20);
-       bulletArray.push(boolet);
-       shoot_sound.play();
-       canShoot = false; 
-   }
-
-   if(!keyIsDown(32)) {
-    canShoot = true;
-   }
-
    for (let i = 0; i < bulletArray.length; i++) {
       fill(bulletArray[i].rValue, bulletArray[i].gValue, bulletArray[i].bValue);
       rect(bulletArray[i].bullX, bulletArray[i].bullY, bulletArray[i].bullwid, bulletArray[i].bullleng)
